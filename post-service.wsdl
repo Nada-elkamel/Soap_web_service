@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="PostService"
+             targetNamespace="http://www.example.org/post"
+             xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:tns="http://www.example.org/post"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+  <types>
+    <xsd:schema targetNamespace="http://www.example.org/post">
+      <xsd:element name="addPost">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="content" type="xsd:string"/>
+            <xsd:element name="userId" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="addPostResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="postId" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="listPosts">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="userId" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="listPostsResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="posts" maxOccurs="unbounded">
+              <xsd:complexType>
+                <xsd:sequence>
+                  <xsd:element name="postId" type="xsd:string"/>
+                  <xsd:element name="content" type="xsd:string"/>
+                  <xsd:element name="createdAt" type="xsd:dateTime"/>
+                </xsd:sequence>
+              </xsd:complexType>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="deletePost">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="postId" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="deletePostResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="message" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </types>
+
+  <message name="addPostRequest">
+    <part name="parameters" element="tns:addPost"/>
+  </message>
+  <message name="addPostResponse">
+    <part name="parameters" element="tns:addPostResponse"/>
+  </message>
+
+  <message name="listPostsRequest">
+    <part name="parameters" element="tns:listPosts"/>
+  </message>
+  <message name="listPostsResponse">
+    <part name="parameters" element="tns:listPostsResponse"/>
+  </message>
+
+  <message name="deletePostRequest">
+    <part name="parameters" element="tns:deletePost"/>
+  </message>
+  <message name="deletePostResponse">
+    <part name="parameters" element="tns:deletePostResponse"/>
+  </message>
+
+  <portType name="PostPortType">
+    <operation name="addPost">
+      <input message="tns:addPostRequest"/>
+      <output message="tns:addPostResponse"/>
+    </operation>
+
+    <operation name="listPosts">
+      <input message="tns:listPostsRequest"/>
+      <output message="tns:listPostsResponse"/>
+    </operation>
+
+    <operation name="deletePost">
+      <input message="tns:deletePostRequest"/>
+      <output message="tns:deletePostResponse"/>
+    </operation>
+  </portType>
+
+  <binding name="PostPortBinding" type="tns:PostPortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="addPost">
+      <soap:operation soapAction="http://www.example.org/post/addPost"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="listPosts">
+      <soap:operation soapAction="http://www.example.org/post/listPosts"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="deletePost">
+      <soap:operation soapAction="http://www.example.org/post/deletePost"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+
+  <service name="PostService">
+    <port name="PostPort" binding="tns:PostPortBinding">
+      <soap:address location="http://localhost:8001/post"/>
+    </port>
+  </service>
+
+</definitions>
