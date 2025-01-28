@@ -1,0 +1,15 @@
+{
+  "name": "soap_user",
+  "version": "1.0.0",
+  "description": "un service web avec soap pour la gestion des utilisateurs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "mongoose": "^8.9.5",
+    "soap": "^1.1.7"
+  }
+}
